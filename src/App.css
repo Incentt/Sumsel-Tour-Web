@@ -1,0 +1,28 @@
+.ftext {
+  padding-top: 65vh;
+  padding-left: 6vw;
+  animation: slide 1.5s ease forwards;
+  padding-right: 10vw;
+}
+
+
+
+@media (max-width: 760px) {
+  .ftext {
+    padding-top: 10vh;
+    padding-left: 6vw;
+  }
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

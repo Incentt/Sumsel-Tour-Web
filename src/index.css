@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
+
+body {
+  margin: 0;
+  font-family: 'Catamaran', sans-serif !important;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
