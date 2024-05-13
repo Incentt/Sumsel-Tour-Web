@@ -1,11 +1,40 @@
-.ftext {
-  padding-top: 65vh;
-  padding-left: 6vw;
-  animation: slide 1.5s ease forwards;
-  padding-right: 10vw;
+.btn {
+  background-color: #3ac724 !important;
+
 }
 
+footer {
+  background-color: #3ac724;
+}
 
+.no-outline {
+
+  border: none !important;
+  outline: none !important;
+}
+
+.fLogo {
+  width: 200px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 70%;
+  overflow: hidden;
+  
+
+}
+
+.imagekotak {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
 
 @media (max-width: 760px) {
   .ftext {
@@ -13,6 +42,67 @@
     padding-left: 6vw;
   }
 }
+.card{
+  height: 100% !important;
+}
+
+.ftext {
+  padding-top: 65vh;
+  padding-left: 6vw;
+  animation: slide 1.5s ease forwards;
+  padding-right: 10vw;
+}
+
+.loadmore {
+
+  width: 200px !important;
+}
+
+
+.experienceDescription {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: transform ease 500ms, opacity ease 500ms;
+  animation: yDown ease 500ms;
+}
+
+.experienceContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.experienceContainer:hover .experienceDescription {
+  animation: yUp ease 500ms;
+  opacity: 1;
+}
+
+@keyframes yUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+@keyframes yDown {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+
 
 
 @keyframes slide {
@@ -25,4 +115,14 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+.about {
+  padding: 0 6vw;
+  margin: 80px 0;
+  text-align: justify;
+}
+
+.about h1 {
+  font-weight: bold;
 }
