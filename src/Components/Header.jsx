@@ -20,8 +20,8 @@ const Header = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -30,20 +30,38 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul className="navbar-nav w-xl">
-            <li className={`nav-item px-4`}>
-              <Link className={`nav-link mr-3 text-white font-weight-bold ${location.pathname === '/' ? 'fw-bold' : 'fw-light'}`} to="/">Home</Link>
+            <li className="nav-item px-4">
+              <Link
+                className={`nav-link mr-3 text-white font-weight-bold ${location.pathname === '/' ? 'fw-bold' : 'fw-light'}`}
+                to="/"
+              >
+                Home
+              </Link>
             </li>
-            <li className={`nav-item px-4`}>
-              <Link className={`nav-link text-white ${location.pathname === '/recommendation' ? 'fw-bold' : 'fw-light'}`} to="/recommendation">Recommendation</Link>
+            <li className="nav-item px-4">
+              <Link
+                className={`nav-link text-white ${location.pathname === '/recommendation' ? 'fw-bold' : 'fw-light'}`}
+                to="/recommendation"
+              >
+                Recommendation
+              </Link>
             </li>
-
-            <li className={`nav-item px-4`}>
-              <Link className={`nav-link text-white ${location.pathname === '/experience' ? 'fw-bold' : 'fw-light'}`} to="/experience">Experience</Link>
+            <li className="nav-item px-4">
+              <Link
+                className={`nav-link text-white ${location.pathname === '/experience' ? 'fw-bold' : 'fw-light'}`}
+                to="/experience"
+              >
+                Experience
+              </Link>
             </li>
-            <li className={`nav-item px-4`}>
-              <Link className={`nav-link text-white ${location.pathname === '/about' ? 'fw-bold' : 'fw-light'}`} to="/about">About Sumatra Selatan</Link>
+            <li className="nav-item px-4">
+              <Link
+                className={`nav-link text-white ${location.pathname === '/about' ? 'fw-bold' : 'fw-light'}`}
+                to="/about"
+              >
+                About Sumatra Selatan
+              </Link>
             </li>
-
           </ul>
         </div>
       </div>
