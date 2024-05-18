@@ -1,8 +1,21 @@
 import background from '../img/cloudy-mountains-landscape.jpg'
 import Recommendation from '../Components/Recommendation';
 import Experience from '../Components/Experience';
-function Main() {
+import { useEffect, useState } from 'react';
+const Main = ({ language }) => {
+    console.log(language);
 
+    const [scrolled, setScrolled] = useState(false);
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 0);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     return (
 
         <div>
@@ -19,7 +32,7 @@ function Main() {
                     position: 'relative',
 
                 }}>
-                <div className='bg-image text-center d-flex flex-column justify-content-center' style={{
+                <div className={`bg-image text-center d-flex flex-column justify-content-center ${scrolled ? 'noOverlay' : 'overlay'}`} style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
@@ -27,18 +40,19 @@ function Main() {
                     height: '100%',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
-                    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay
+
                 }}>
 
-                    <div className='ftext d-flex flex-column align-items-start text-start'>
-                        <h1 className="text-white text-capital fw-bold">Selamat datang di Portal Wisata Sumatra Selatan</h1>
-                        <h3 className="text-white">Eksplorasi Keindahan Alam, Budaya, dan Petualangan yang Tak Terlupakan!</h3>
+                    <div className='ftext d-flex flex-column align-items-center text-center'>
+                        <h1 className="STitle fw-bold">INDONESIA</h1>
+                        <h1 className="Title fw-bold">SUMATRA SELATAN</h1>
+
                     </div>
                 </div>
 
             </div>
-            <Recommendation />
-            <Experience/>
+            <Recommendation language={language} />
+
         </div>
 
 

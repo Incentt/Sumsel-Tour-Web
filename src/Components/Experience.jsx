@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import loadingGif from '../img/Loading.gif'
 
 const ACCESS_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;
-const query = 'sumatra selatan indonesia';
+const query = 'Sumatra Selatan';
 const PER_PAGE = 9; // Adjust the number of photos per page
 
 function Experience() {
@@ -43,11 +43,14 @@ function Experience() {
 
     const goToExperience = () => {
         navigate('/experience');
+        window.scrollTo(0, 0);
+
     };
 
     return (
-        <div className="mt-5 p-5 d-flex flex-column align-items-center justify-content-center">
-            <h1 className="mb-5">Sumatra Selatan Experience</h1>
+        <div className="greenBg p-5 d-flex flex-column align-items-center justify-content-center">
+            <h1 className="mb-3 pt-5">Sumatra Selatan Experience</h1>
+            <p className='mb-5'>"Life is either a daring adventure or nothing at all." </p>
             {loading ? ( // Render loading screen if loading is true
                 <div className='mt-5 mb-5'>
                     <div className='mt-5 mb-5'></div>

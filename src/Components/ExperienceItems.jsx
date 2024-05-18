@@ -1,29 +1,39 @@
 import React, { useState } from 'react';
 
-
 function ExperienceItems({ experience }) {
+    const [isHovered, setIsHovered] = useState(false);
 
-    function showImage(){
-        window.open(experience.urls.regular, '_blank');
-
+    function handleMouseEnter() {
+        setIsHovered(true);
     }
+
+    function handleMouseLeave() {
+        setIsHovered(false);
+    }
+
+    function showImage() {
+        window.open(experience.urls.regular, '_blank');
+    }
+
     return (
         <div className="col-md-4 mb-5">
-            <div className="card">
+            <div className="portrait">
                 <div
-                    className="experienceContainer image-container"
-          
+                    className="experienceContainer"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 >
-                    <img onClick={showImage}
-                        src={experience.urls.regular}
+                    <img
+                        onClick={showImage}
+                        src={experience.urls.small}
                         className="imagekotak"
                         alt={experience.alt_description}
                     />
-                    { (
-                        <div className="experienceDescription">
-                            <p>{experience.alt_description}</p>
-                        </div>
-                    )}
+                    <div
+                        className={`experienceDescription ${isHovered ? 'hovered' : 'notHovered'}`}
+                    >
+                        <p>{experience.alt_description}</p>
+                    </div>
                 </div>
             </div>
         </div>

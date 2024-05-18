@@ -2,18 +2,24 @@ import React, { useState, useEffect } from 'react';
 import ExperienceItems from '../Components/ExperienceItems';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import loadingGif from '../img/Loading.gif'
+import loadingGif from '../img/Loading.gif';
 
 const ACCESS_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;
-const query = 'sumatra selatan indonesia';
+const query = 'Sumatra Selatan Palembang';
 const PER_PAGE = 9; // Adjust the number of photos per page
 
-function Experience() {
+const ExperiencePages = ({ language }) => {
+    const Judul = language === 'EN' ? 'Explore Sumatra Selatan' : 'Jelajahi Sumatra Selatan';
+
     const [places, setPlaces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
-    
+
+    const handleScrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
@@ -41,17 +47,15 @@ function Experience() {
         setCurrentPage(prevPage => prevPage + 1);
     };
 
-    const goToExperience = () => {
-        navigate('/experience');
-    };
-
     return (
         <div className="mt-5 p-5 d-flex flex-column align-items-center justify-content-center">
-            <h1 className="mb-5">Sumatra Selatan Experience</h1>
+            <h1 className="mb-2">{Judul}</h1>
+            <p className='mb-5'>"Life is either a daring adventure or nothing at all." </p>
+
             {loading ? ( // Render loading screen if loading is true
                 <div className='mt-5 mb-5'>
                     <div className='mt-5 mb-5'></div>
-                    <img src={loadingGif} />
+                    <img src={loadingGif} alt="Loading..." />
                     <div className='mt-5 mb-5 min-vh-45'></div>
                 </div>
             ) : (
@@ -60,14 +64,17 @@ function Experience() {
                         {places.map((place, index) => (
                             <ExperienceItems key={index} experience={place} />
                         ))}
-                        <div className='mt-3 d-flex justify-content-center'>
-                            <button type="button" onClick={loadNextPage} className="loadmore btn text-white fw-bold rounded-pill border-none">Load More</button>
-                        </div>
+                    </div>
+                    <div className='mt-3 d-flex justify-content-center'>
+                        <button type="button" onClick={loadNextPage} className="loadmore btn text-white fw-bold rounded-pill border-none">Load More</button>
                     </div>
                 </div>
             )}
+            <p onClick={handleScrollToTop} style={{ color: '#1b3c34', cursor: 'pointer', marginTop: '20px' }}>
+                Back To Top
+            </p>
         </div>
     );
 }
 
-export default Experience;
+export default ExperiencePages;
