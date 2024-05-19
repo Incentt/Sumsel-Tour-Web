@@ -97,7 +97,6 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
             aria-controls="navbarNav"
             aria-expanded={!isNavCollapsed} // Use state to control aria-expanded
             aria-label="Toggle navigation"
-
           >
             <span className="navbar-toggler-icon border-0"></span>
           </button>
@@ -130,8 +129,8 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
                 type="button"
                 id="dropdownMenuButton"
                 aria-haspopup="true"
-                aria-expanded={isDropdownOpen} // Set aria-expanded to manage accessibility
-                onClick={toggleDropdown} // Call toggleDropdown when button is clicked
+                aria-expanded={isDropdownOpen} 
+                onClick={toggleDropdown}
               >
                 {isLoading ? (
                   <div className="d-flex align-items-center">
@@ -165,7 +164,6 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
                 )}
               </button>
             )}
-            {/* Render dropdown menu only if isDropdownOpen is true */}
             {isDropdownOpen && (
               <div className="dropdown-menu d-flex flex-column" aria-labelledby="dropdownMenuButton">
                 <a className="dropdown-item" href="#" onClick={() => handleWeatherChange("Palembang")}>Palembang</a>

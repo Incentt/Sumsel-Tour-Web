@@ -23,7 +23,6 @@ const Experience = ({ language }) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
                 const data = await response.json();
                 setPlaces(prevPlaces => [...prevPlaces, ...data.results]);
                 setLoading(false);
@@ -43,7 +42,7 @@ const Experience = ({ language }) => {
     const goToExperience = () => {
         navigate('/experience');
         window.scrollTo(0, 0);
-
+        
     };
 
     return (

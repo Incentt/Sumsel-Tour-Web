@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import loadingGif from '../img/Loading.gif';
 
 const ACCESS_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;
-const query = 'Sumatra Selatan Palembang';
+const query = 'Sumatra Selatan Palembang'; //Search Keyword
 const PER_PAGE = 9; // Adjust the number of photos per page
 
 const ExperiencePages = ({ language }) => {
@@ -13,13 +13,14 @@ const ExperiencePages = ({ language }) => {
     const [places, setPlaces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const navigate = useNavigate();
 
+    //Scroll to top
     const handleScrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     useEffect(() => {
+        //Fetching Foto
         const fetchPhotos = async () => {
             try {
                 const apiUrl = `https://api.unsplash.com/search/photos?page=${currentPage}&per_page=${PER_PAGE}&query=${query}&client_id=${ACCESS_KEY}`;
@@ -43,20 +44,21 @@ const ExperiencePages = ({ language }) => {
 
     const loadNextPage = () => {
         setCurrentPage(prevPage => prevPage + 1);
-    };
+    }; //Ke next page
 
     return (
         <div className="mt-5 p-5 d-flex flex-column align-items-center justify-content-center">
             <h1 className="mb-2">{Judul}</h1>
             <p className='mb-5'>"Life is either a daring adventure or nothing at all." </p>
 
-            {loading ? ( // Render loading screen if loading is true
+            {loading ? ( // Render loading
                 <div className='mt-5 mb-5'>
                     <div className='mt-5 mb-5'></div>
                     <img src={loadingGif} alt="Loading..." />
                     <div className='mt-5 mb-5 min-vh-45'></div>
                 </div>
             ) : (
+                // Render Foto
                 <div className="container">
                     <div className="cardBox row gx-5">
                         {places.map((place, index) => (
@@ -70,6 +72,7 @@ const ExperiencePages = ({ language }) => {
                     </div>
                 </div>
             )}
+            {/* Scroll to top */}
             <p onClick={handleScrollToTop} style={{ color: '#1b3c34', cursor: 'pointer', marginTop: '20px' }}>
                 {language === 'EN' ? 'Back To Top' : 'Kembali Ke Atas'}
             </p>
