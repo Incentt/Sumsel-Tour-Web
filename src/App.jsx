@@ -17,7 +17,6 @@ function App() {
     const newLanguage = language === 'EN' ? 'ID' : 'EN';
     setLanguage(newLanguage);
     localStorage.setItem('language', newLanguage);
-    console.log(language);
   };
 
   const location = useLocation();

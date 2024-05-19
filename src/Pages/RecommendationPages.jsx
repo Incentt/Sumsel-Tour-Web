@@ -13,7 +13,7 @@ const RecommendationPages = ({ language }) => {
 
     const [activeButton, setActiveButton] = useState('attractions');
     const [filter, setFilter] = useState('attractions');
-    const [search, setSearch] = useState('Sumatra Selatan');
+    const [search, setSearch] = useState('Rekomendasi Sumatra Utara');
     const [inputValue, setInputValue] = useState('');
 
     const handleFilterChange = (filterType) => {
@@ -32,29 +32,45 @@ const RecommendationPages = ({ language }) => {
 
     const APIKEY = process.env.REACT_APP_TRIP_API_KEY;
 
+
+
     useEffect(() => {
         const fetchPlaces = async () => {
+            const payload = {
+                textQuery: search + filter
+            };
+
             try {
-                const url = `https://api.content.tripadvisor.com/api/v1/location/search?searchQuery=${search}&category=${filter}&radius=100000&radiusUnit=KM&language=en&key=${APIKEY}`;
-                const response = await axios.get(url);
-                console.log("Response from TripAdvisor API:", response.data);
-                setPlaces(response.data);
-                setLoading(false); // Update loading state once data is fetched
+                const response = await axios.post(
+                    'https://places.googleapis.com/v1/places:searchText',
+                    payload,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Goog-Api-Key': APIKEY,
+                            'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri'
+                        }
+                    }
+                );
+                console.log(response.data.places);
+                setPlaces(response.data.places || []);
+                setLoading(false);
             } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false); // Update loading state in case of error
+                console.error('Error fetching places:', error);
             }
         };
-        console.log(filter);
-        fetchPlaces(); // Call the function to fetch data when component mounts
-    }, [APIKEY, search, filter]); // Include APIKEY in dependency array to trigger effect when it changes
+
+        fetchPlaces();
+    }, [APIKEY, search, filter]);
+
+
 
 
     return (
         <div className="mt-5 p-5 d-flex flex-column align-items-center justify-content-center">
             <h1 className="mb-3">{Judul}</h1>
 
-            <div class="container mt-5">
+            <div className="container mt-5">
                 <form className="form-inline my-2 my-lg-0 d-flex justify-content-center" onSubmit={handleFormSubmit}>
                     <input
                         className="form-control mr-sm-2"
@@ -74,7 +90,6 @@ const RecommendationPages = ({ language }) => {
                 <div className="btn-group d-flex justify-content-center mt-3 mb-5" role="group" aria-label="Filter buttons">
                     {['attractions', 'hotels', 'restaurants'].map((filterType) => (
                         <button
-                            key={filterType}
                             type="button"
                             className={`btn ${activeButton === filterType ? ' text-white' : 'bg-white border-black'}`}
                             onClick={() => handleFilterChange(filterType)}
@@ -97,10 +112,10 @@ const RecommendationPages = ({ language }) => {
             ) : (
                 <div className="container">
                     <div className="cardBox row gx-5">
-                        {places.data && places.data.length > 0 ? (
-                            places.data.map((place, index) => (
+                        {places ? (
+                            places.map((place, index) => (
                                 place ? (
-                                    <RecommendationItems key={index} place={place} />
+                                    <RecommendationItems key={index} place={place} language={language} />
                                 ) : null
                             ))
                         ) : (

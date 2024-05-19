@@ -8,12 +8,12 @@ const ACCESS_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;
 const query = 'Sumatra Selatan';
 const PER_PAGE = 9; // Adjust the number of photos per page
 
-function Experience() {
+const Experience = ({ language }) => {
     const [places, setPlaces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
@@ -49,7 +49,7 @@ function Experience() {
 
     return (
         <div className="greenBg p-5 d-flex flex-column align-items-center justify-content-center">
-            <h1 className="mb-3 pt-5">Sumatra Selatan Experience</h1>
+            <h1 className="mb-3 pt-5">{language === 'EN' ? 'Sumatra Selatan Experience' : 'Kenangan Sumatra Selatan'}</h1>
             <p className='mb-5'>"Life is either a daring adventure or nothing at all." </p>
             {loading ? ( // Render loading screen if loading is true
                 <div className='mt-5 mb-5'>
@@ -64,7 +64,11 @@ function Experience() {
                             <ExperienceItems key={index} experience={place} />
                         ))}
                         <div className='mt-3 d-flex justify-content-center'>
-                            <button type="button" onClick={goToExperience} className="loadmore btn text-white fw-bold rounded-pill border-none">Load More</button>
+                            <button type="button" onClick={goToExperience} className="loadmore btn text-white fw-bold rounded-pill border-none">
+                                
+                            {language === 'EN' ? 'Load More' : 'Muat Lebih Banyak'}
+
+                            </button>
                         </div>
                     </div>
                 </div>

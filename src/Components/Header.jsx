@@ -31,9 +31,18 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
   const [isLoading, setLoading] = useState(false);
 
 
+ 
 
+  const checkPath = () =>{
+    const path = window.location.pathname;
 
-
+    if(path == "/"){
+      return false;
+    }else
+    return true;
+    
+  }
+  const currentPath = checkPath();
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
@@ -46,7 +55,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
     const handleScroll = () => {
       setScrolled(window.scrollY > 0);
     };
-
+    checkPath();
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -78,7 +87,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
   const navLinkClass = (path) => `nav-link text-white ${location.pathname === path ? 'fw-bold' : 'fw-light'}`;
 
   return (
-    <div className={`navbarTop d-flex flex-row w-100 fixed-top p-2 ps-3 pe-3 ${scrolled ? 'scrolled' : ''} justify-content-between`}>
+    <div className={`navbarTop d-flex flex-row w-100 fixed-top p-2 ps-3 pe-3 ${currentPath ? 'scrolled' : ''} ${scrolled ? 'scrolled' : ''} justify-content-between`}>
       <nav className={`navSec navbar navbar-dark navbar-expand-lg `}>
         <div className='container'>
           <button
@@ -114,7 +123,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
       {weather && (
 
         <div className={`navSec ${isNavCollapsed ? 'd-md-flex collapse' : 'd-none'}   align-items-center justify-content-end navbar-expand-lg`}>
-          <div className="dropdown me-2">
+          <div className="dropdown ">
             {isWeather && ( // Conditionally render weather-related elements if isWeather is true
               <button
                 className="me-2 btn border text-white rounded-pill bg-dark d-inline-flex align-items-center px-3 py-1 "
@@ -173,7 +182,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
             )}
             <button className="btn border text-white rounded-pill bg-dark d-inline-flex align-items-center px-3 py-1" onClick={toggleLanguage}>
               {language === 'EN' ? (
-                <div className='d-flex'>
+                <div className=' d-none d-md-flex'>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 30" width="30px" height="30px" >
                     <clipPath id="t">
                       <path d="M25,15h25v15zv15h-25zh-25v-15zv-15h25z" />
@@ -201,7 +210,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
 
           <li className="nav-item d-flex align-items-center">
             <span className="nav-link text-white d-flex align-items-center">
-              <p className='align-middle m-0 px-2'>
+              <p className={`align-middle m-0 px-2 d-none d-xl-block`}>
                 {weather.location.localtime}
               </p>
             </span>

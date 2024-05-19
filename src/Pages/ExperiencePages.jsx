@@ -9,8 +9,7 @@ const query = 'Sumatra Selatan Palembang';
 const PER_PAGE = 9; // Adjust the number of photos per page
 
 const ExperiencePages = ({ language }) => {
-    const Judul = language === 'EN' ? 'Explore Sumatra Selatan' : 'Jelajahi Sumatra Selatan';
-
+    const Judul = language === 'EN' ? 'Sumatra Selatan Experience' : 'Kenangan Sumatra Selatan';
     const [places, setPlaces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -66,12 +65,14 @@ const ExperiencePages = ({ language }) => {
                         ))}
                     </div>
                     <div className='mt-3 d-flex justify-content-center'>
-                        <button type="button" onClick={loadNextPage} className="loadmore btn text-white fw-bold rounded-pill border-none">Load More</button>
+                        <button type="button" onClick={loadNextPage} className="loadmore btn text-white fw-bold rounded-pill border-none">
+                            {language === 'EN' ? 'Load More' : 'Muat Lebih Banyak'}
+                        </button>
                     </div>
                 </div>
             )}
             <p onClick={handleScrollToTop} style={{ color: '#1b3c34', cursor: 'pointer', marginTop: '20px' }}>
-                Back To Top
+                {language === 'EN' ? 'Back To Top' : 'Kembali Ke Atas'}
             </p>
         </div>
     );

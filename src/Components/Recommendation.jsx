@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import Axios
 import loadingGif from '../img/Loading.gif';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const Recommendation = ({ language }) => {
   const [loading, setLoading] = useState(true);
@@ -11,26 +12,39 @@ const Recommendation = ({ language }) => {
   const navigate = useNavigate();
   const APIKEY = process.env.REACT_APP_TRIP_API_KEY;
 
-
   const Judul = language === 'EN' ? 'Explore Sumatra Selatan' : 'Jelajahi Sumatra Selatan';
 
 
+  const textQuery = "Rekomendasi Wisata Sumatra Utara";
+
   useEffect(() => {
     const fetchPlaces = async () => {
+      const payload = {
+        textQuery: textQuery
+      };
+
       try {
-        const url = `https://api.content.tripadvisor.com/api/v1/location/search?searchQuery=Sumatra%20Selatan&category=attractions&radius=100000&radiusUnit=KM&language=en&key=${APIKEY}`;
-        const response = await axios.get(url);
-        console.log("Response from TripAdvisor API:", response.data);
-        setPlaces(response.data);
-        setLoading(false); // Update loading state once data is fetched
+        const response = await axios.post(
+          'https://places.googleapis.com/v1/places:searchText',
+          payload,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Goog-Api-Key': APIKEY,
+              'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri'
+            }
+          }
+        );
+        console.log(response.data.places);
+        setPlaces(response.data.places || []);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false); // Update loading state in case of error
+        console.error('Error fetching places:', error);
       }
     };
 
-    fetchPlaces(); // Call the function to fetch data when component mounts
-  }, [APIKEY]); // Include APIKEY in dependency array to trigger effect when it changes
+    fetchPlaces();
+  }, [APIKEY]);
 
 
   function goToRecommendation() {
@@ -48,10 +62,10 @@ const Recommendation = ({ language }) => {
         <div className="container">
           <div className="cardBox row gx-5">
 
-            {places.data && places.data.length > 0 ? (
-              places.data.slice(0, 1).map((place, index) => (
+            {places && places.length > 0 ? (
+              places.slice(0, 6).map((place, index) => (
                 place ? (
-                  <RecommendationItems key={index} place={place} />
+                  <RecommendationItems key={index} place={place} language={language}/>
                 ) : null
               ))
             ) : (
@@ -61,7 +75,9 @@ const Recommendation = ({ language }) => {
             <div className='mt-3 d-flex justify-content-center'>
               <button type="button"
                 onClick={goToRecommendation}
-                className="loadmore btn text-white fw-bold rounded-pill border-none">Load More</button>
+                className="loadmore btn text-white fw-bold rounded-pill border-none">                            
+                {language === 'EN' ? 'Load More' : 'Muat Lebih Banyak'}
+              </button>
             </div>
           </div>
         </div>

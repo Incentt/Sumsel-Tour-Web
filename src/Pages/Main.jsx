@@ -3,8 +3,7 @@ import Recommendation from '../Components/Recommendation';
 import Experience from '../Components/Experience';
 import { useEffect, useState } from 'react';
 const Main = ({ language }) => {
-    console.log(language);
-
+    
     const [scrolled, setScrolled] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -52,7 +51,7 @@ const Main = ({ language }) => {
 
             </div>
             <Recommendation language={language} />
-
+            <Experience language={language} />
         </div>
 
 

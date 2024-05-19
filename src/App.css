@@ -5,11 +5,11 @@
 
 }
 .navbarTop {
-  background-color: transparent;
+  
   transition: background-color 0.3s ease;
 }
 .navSec{
-  width: 33%;
+  width: 45%;
 }
 .navbarTop.scrolled {
   background-color: rgba(51, 51, 51, 0.8); 
