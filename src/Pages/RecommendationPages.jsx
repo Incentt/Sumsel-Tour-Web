@@ -13,9 +13,19 @@ const RecommendationPages = ({ language }) => {
 
     const [activeButton, setActiveButton] = useState('attractions');
     const [filter, setFilter] = useState('attractions');
-    const [search, setSearch] = useState('Rekomendasi Sumatra Utara');
     const [inputValue, setInputValue] = useState('');
+    const kota = ["Palembang", "Pagar Alam", "Lubuk Linggau", "Prabumulih", "Muara Enim", "Banyuasin", "Lahat", "Musi Rawas", "Musi Banyuasin", "Ogan Komering Ilir", "Ogan Komering Ulu", "Ogan Ilir", "Empat Lawang", "Penukal Abab Lematang Ilir"];
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [search, setSearch] = useState('Rekomendasi Wisata');
 
+    const handleCityChange = (city) => {
+        setSelectedCity(city);
+        toggleDropdown(!isDropdownOpen);
+    };
     const handleFilterChange = (filterType) => {
         setActiveButton(filterType);
         setFilter(filterType);
@@ -31,38 +41,36 @@ const RecommendationPages = ({ language }) => {
 
 
     const APIKEY = process.env.REACT_APP_TRIP_API_KEY;
+    {
+        useEffect(() => {
+            const fetchPlaces = async () => {
+                const payload = {
+                    textQuery: search + (selectedCity ? selectedCity : "Sumatra Selatan") + filter,
 
+                };
 
-
-    useEffect(() => {
-        const fetchPlaces = async () => {
-            const payload = {
-                textQuery: search + filter
+                try {
+                    const response = await axios.post(
+                        'https://places.googleapis.com/v1/places:searchText',
+                        payload,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Goog-Api-Key': APIKEY,
+                                'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri'
+                            }
+                        }
+                    );
+                    setPlaces(response.data.places || []);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching places:', error);
+                }
             };
 
-            try {
-                const response = await axios.post(
-                    'https://places.googleapis.com/v1/places:searchText',
-                    payload,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Goog-Api-Key': APIKEY,
-                            'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri'
-                        }
-                    }
-                );
-                console.log(response.data.places);
-                setPlaces(response.data.places || []);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching places:', error);
-            }
-        };
-
-        fetchPlaces();
-    }, [APIKEY, search, filter]);
-
+            fetchPlaces();
+        }, [APIKEY, search, filter, selectedCity]);
+    }
 
 
 
@@ -81,11 +89,37 @@ const RecommendationPages = ({ language }) => {
                         onChange={handleInputChange}
                     />
                     <button
-                        className="btn btn-primary my-2 my-sm-0 ms-2"
-                        type="submit"
-                    >
+
+                        className="btn my-2 my-sm-0 ms-2"
+                        type="submit">
+
                         {language === 'EN' ? "Search" : "Cari"}
                     </button>
+                    <div className="dropdown">
+                        <button  onClick={toggleDropdown} className="btn my-2 my-sm-0 ms-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {selectedCity ? selectedCity : (language === 'EN' ? "City" : "Kota")}
+                        </button>
+                        <div>
+
+
+                        
+                            {isDropdownOpen && (
+                                    <div className='dropdown-menu d-flex flex-column' aria-labelledby="dropdownMenuButton">
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("")}>{language === "EN" ? "All City" : "Semua Kota"}</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Palembang")}>Palembang</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Prabumulih")}>Prabumulih</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Lubuklinggau")}>Lubuklinggau</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Baturaja")}>Baturaja</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Lahat")}>Lahat</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Pagar Alam")}>Pagar Alam</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Martapura")}>Martapura</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Muara Enim")}>Muara Enim</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Indralaya")}>Indralaya</a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleCityChange("Kayu Agung")}>Kayu Agung</a>
+                                </div>
+                                )}
+                        </div>
+                    </div>
                 </form>
                 <div className="btn-group d-flex justify-content-center mt-3 mb-5" role="group" aria-label="Filter buttons">
                     {['attractions', 'hotels', 'restaurants'].map((filterType) => (
@@ -112,10 +146,10 @@ const RecommendationPages = ({ language }) => {
             ) : (
                 <div className="container">
                     <div className="cardBox row gx-5">
-                        {places ? (
-                            places.map((place, index) => (
+                        {places && places.length > 0 ? (
+                            places.slice(0, 18).map((place, index) => (
                                 place ? (
-                                    <RecommendationItems key={index} place={place} language={language} />
+                                    <RecommendationItems key={place.displayName.text} place={place} language={language} />
                                 ) : null
                             ))
                         ) : (

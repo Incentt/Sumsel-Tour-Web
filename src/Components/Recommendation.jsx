@@ -15,7 +15,7 @@ const Recommendation = ({ language }) => {
   const Judul = language === 'EN' ? 'Explore Sumatra Selatan' : 'Jelajahi Sumatra Selatan';
 
 
-  const textQuery = "Rekomendasi Wisata Sumatra Utara";
+  const textQuery = "Rekomendasi Wisata Sumatra Selatan";
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -38,8 +38,9 @@ const Recommendation = ({ language }) => {
         console.log(response.data.places);
         setPlaces(response.data.places || []);
         setLoading(false);
-      } catch (error) {
-        console.error('Error fetching places:', error);
+      }
+      catch (error) {
+        console.error('Error fetching places');
       }
     };
 
@@ -65,7 +66,7 @@ const Recommendation = ({ language }) => {
             {places && places.length > 0 ? (
               places.slice(0, 6).map((place, index) => (
                 place ? (
-                  <RecommendationItems key={index} place={place} language={language}/>
+                  <RecommendationItems key={index} place={place} language={language} />
                 ) : null
               ))
             ) : (
@@ -75,7 +76,7 @@ const Recommendation = ({ language }) => {
             <div className='mt-3 d-flex justify-content-center'>
               <button type="button"
                 onClick={goToRecommendation}
-                className="loadmore btn text-white fw-bold rounded-pill border-none">                            
+                className="loadmore btn text-white fw-bold rounded-pill border-none">
                 {language === 'EN' ? 'Load More' : 'Muat Lebih Banyak'}
               </button>
             </div>

@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import nofound from '../img/notfound.png';
-import axios from 'axios'; 
+import axios from 'axios';
 
-const RecommendationItems = ({place, language }) => {
+const RecommendationItems = ({ place, language }) => {
     const [image, setImage] = useState('');
     const [website, setWebsite] = useState('');
     const [review, setReview] = useState('');
     const APIKEY = process.env.REACT_APP_TRIP_API_KEY;
     const placeId = place.id;
     const rating = parseInt(place.rating);
-    console.log(rating)
     const renderRating = () => {
         const start = [];
         for (let i = 0; i < 5; i++) {
-            
+
             if (i < rating) {
                 start.push(<FontAwesomeIcon key={i} icon={faStar} style={{ color: 'gold', marginRight: '5px' }} />);
             } else {
@@ -54,10 +53,12 @@ const RecommendationItems = ({place, language }) => {
         <div className="col-md-4 mb-5">
             <div className="card h-100 d-flex flex-column">
                 <div className="image-container">
-                    <img
-                        src={photoUrl}
-                        className="imagekotak"
-                    />
+                    {photoUrl ? (
+                        <img src={photoUrl} alt="User"className="imagekotak" />
+                    ) : (
+                        <img src={nofound} alt="User"className="imagekotak" />
+                    )}
+                   
                 </div>
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{place.displayName.text}</h5>
@@ -67,8 +68,8 @@ const RecommendationItems = ({place, language }) => {
                         </p>
                         <div className="d-flex align-items-center justify-content-center">
                             {place.rating && renderRating()}
-                            </div>
-                 
+                        </div>
+
                     </div>
                     {place.formattedAddress && (
                         <p className="card-text">{place.formattedAddress}</p>

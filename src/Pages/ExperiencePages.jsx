@@ -31,7 +31,6 @@ const ExperiencePages = ({ language }) => {
 
                 const data = await response.json();
                 setPlaces(prevPlaces => [...prevPlaces, ...data.results]);
-                console.log(data.results);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching photos:', error);
