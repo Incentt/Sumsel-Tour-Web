@@ -31,7 +31,7 @@ const Recommendation = ({ language }) => {
             headers: {
               'Content-Type': 'application/json',
               'X-Goog-Api-Key': APIKEY,
-              'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri'
+              'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.websiteUri,places.rating,places.id,places.googleMapsUri,places.photos'
             }
           }
         );

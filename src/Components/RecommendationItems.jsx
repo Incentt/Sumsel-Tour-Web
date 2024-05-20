@@ -27,27 +27,9 @@ const RecommendationItems = ({ place, language }) => {
     }
     useEffect(() => {
         //Fetching foto berdasarkan ID yang di fetch sebelumnya
-        const fetchPlaceDetails = async () => {
-            try {
-                const response = await axios.get(
-                    `https://places.googleapis.com/v1/places/${placeId}`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Goog-Api-Key': APIKEY,
-                            'X-Goog-FieldMask': 'photos' //displayName id
-                        }
-                    }
-                );
-                setImage(response.data.photos[0].name);
-                const url = `https://places.googleapis.com/v1/${response.data.photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=${APIKEY}`
-                setPhotoUrl(url); // SET foto berdasarkan URL
-            } catch (error) {
-                console.error('Error fetching place details:', error);
-            }
-        };
-        fetchPlaceDetails();
-    }, [APIKEY, placeId]);
+        const url = `https://places.googleapis.com/v1/${place.photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=${APIKEY}`
+        setPhotoUrl(url); // SET foto berdasarkan URL
+    }, [APIKEY, place.photos[0].name]);
 
 
     return (
