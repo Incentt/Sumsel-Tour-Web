@@ -35,7 +35,7 @@ const RecommendationItems = ({ place, language }) => {
                         headers: {
                             'Content-Type': 'application/json',
                             'X-Goog-Api-Key': APIKEY,
-                            'X-Goog-FieldMask': 'id,displayName,photos'
+                            'X-Goog-FieldMask': 'photos' //displayName id
                         }
                     }
                 );
