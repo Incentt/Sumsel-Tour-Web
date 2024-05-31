@@ -1,8 +1,7 @@
 
+//About Pages
 const About = ({ language }) => {
-
     return (
-
         <div>
             <div
                 className="Gambar sumsel bg-fluid"

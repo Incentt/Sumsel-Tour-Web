@@ -24,6 +24,7 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
+      {/* Header */}
       <Header language={language} toggleLanguage={toggleLanguage} />
       {/* Dynamic Routing */}
       <Routes>

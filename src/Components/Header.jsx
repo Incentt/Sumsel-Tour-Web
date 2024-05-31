@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../logo.svg';
 import gear from '../img/Gear.gif'
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const ACCESS_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-
+//Header Language
 const Header = ({ language, toggleLanguage }) => {
   const navLinksEN = [
     { to: '/', text: 'Home' },
@@ -30,9 +29,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
   const [isDropdownOpen, setDropdownOpen] = useState(false); // Add state for dropdown visibility
   const [isLoading, setLoading] = useState(false);
 
-
- 
-
+//Check Current path
   const checkPath = () =>{
     const path = window.location.pathname;
 
@@ -62,12 +59,13 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
     };
   }, []);
   const handleWeatherChange = (city) => {
-    setWeatherType(city);
+    setWeatherType(city); //Change weather to selected city
     setDropdownOpen(false); // Close dropdown after selecting a city
-    setLoading(true);
+    setLoading(true); //set loading when loading
   };
 
   useEffect(() => {
+    //Weather Fetching
     const fetchWeather = async () => {
       try {
         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${ACCESS_KEY}&q=${isWeather}&aqi=no`);
@@ -120,7 +118,6 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
 
 
       {weather && (
-
         <div className={`navSec ${isNavCollapsed ? 'd-md-flex collapse' : 'd-none'}   align-items-center justify-content-end navbar-expand-lg`}>
           <div className="dropdown ">
             {isWeather && ( // Conditionally render weather-related elements if isWeather is true
@@ -164,6 +161,7 @@ const navLinks = language === 'EN' ? navLinksEN : navLinksID;
                 )}
               </button>
             )}
+            {/** Dropdown menu */}
             {isDropdownOpen && (
               <div className="dropdown-menu d-flex flex-column" aria-labelledby="dropdownMenuButton">
                 <a className="dropdown-item" href="#" onClick={() => handleWeatherChange("Palembang")}>Palembang</a>

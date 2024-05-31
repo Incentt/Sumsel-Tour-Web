@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import nofound from '../img/notfound.png';
-import axios from 'axios';
 
+//Recomendation Cards Components
 //CARD RECOMENDATION
 const RecommendationItems = ({ place, language }) => {
     const [image, setImage] = useState('');

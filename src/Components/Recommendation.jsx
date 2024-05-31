@@ -4,20 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import Axios
 import loadingGif from '../img/Loading.gif';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const Recommendation = ({ language }) => {
   const [loading, setLoading] = useState(true);
   const [places, setPlaces] = useState([]);
   const navigate = useNavigate();
   const APIKEY = process.env.REACT_APP_TRIP_API_KEY;
-
   const Judul = language === 'EN' ? 'Explore Sumatra Selatan' : 'Jelajahi Sumatra Selatan';
-
 
   const textQuery = "Rekomendasi Wisata Sumatra Selatan";
 
   useEffect(() => {
+    //Fetch API
     const fetchPlaces = async () => {
       const payload = {
         textQuery: textQuery
