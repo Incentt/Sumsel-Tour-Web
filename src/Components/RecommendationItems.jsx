@@ -26,7 +26,6 @@ const RecommendationItems = ({ place, language }) => {
         return start;
     }
     useEffect(() => {
-        //Fetching foto berdasarkan ID yang di fetch sebelumnya
         const url = `https://places.googleapis.com/v1/${place.photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=${APIKEY}`
         setPhotoUrl(url); // SET foto berdasarkan URL
     }, [APIKEY, place.photos[0].name]);
